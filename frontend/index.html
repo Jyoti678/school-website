@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - St. Andrews International Academy</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-contact">
+        <span id="top-bar-phone">📞 +1 (555) 234-5678</span>
+        <span id="top-bar-email">✉️ info@standrewsacademy.edu</span>
+        <span id="top-bar-timings" style="margin-left: 10px; color: var(--accent-gold);">🕒 Mon-Fri: 8:00 AM - 3:30 PM</span>
+      </div>
+      <div class="top-bar-social">
+        <a href="/admin/login.html" class="btn-admin-login">🔐 Admin CMS Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-logo-group">
+        <img id="brand-logo-img" src="/public/logo.png" alt="School Crest" onerror="this.src='https://via.placeholder.com/60?text=SAIA'">
+        <div class="brand-text">
+          <h1 id="brand-school-name">St. Andrews International Academy</h1>
+          <p id="brand-tagline">Nurturing Minds, Shaping Futures</p>
+        </div>
+      </div>
+
+      <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="main-nav" id="main-nav-container">
+        <ul class="nav-list">
+          <li><a href="/index.html" class="active">Home</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/principal.html">Principal's Message</a></li>
+          <li><a href="/academics.html">Academics</a></li>
+          <li><a href="/facilities.html">Facilities</a></li>
+          <li><a href="/faculty.html">Faculty</a></li>
+          <li><a href="/notices.html">Notices</a></li>
+          <li><a href="/events.html">Events</a></li>
+          <li><a href="/gallery.html">Gallery</a></li>
+          <li><a href="/admissions.html">Admissions</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="hero-section">
+    <div class="container">
+      <h1 id="hero-title">Excellence in Education & Character</h1>
+      <p id="hero-description">A world-class learning environment fostering academic achievement, personal integrity, and global leadership for students from Kindergarten to Grade 12.</p>
+      <div class="hero-actions">
+        <a href="/admissions.html" class="btn btn-primary">Admissions 2026-27</a>
+        <a href="/about.html" class="btn btn-secondary">Explore Our Campus</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notice Board Section -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>Latest Notices & Announcements</h2>
+        <p>Stay updated with official circulars, event alerts, and academic schedules.</p>
+      </div>
+
+      <div id="home-notices-list">
+        <p style="text-align: center;">Loading notices...</p>
+      </div>
+
+      <div style="text-align: center; margin-top: 25px;">
+        <a href="/notices.html" class="btn btn-terracotta">View All Announcements →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Principal Address Preview -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-2" style="align-items: center;">
+        <div>
+          <img id="home-principal-photo" src="/public/principal.jpg" alt="Principal" style="border-radius: var(--radius-md); box-shadow: var(--shadow-md); max-height: 400px; width: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/500x400?text=Principal+Photo'">
+        </div>
+        <div>
+          <span style="color: var(--accent-terracotta); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Leadership Message</span>
+          <h2 id="home-principal-name" style="margin-top: 8px;">Dr. Eleanor Vance, Ph.D.</h2>
+          <p id="home-principal-designation" style="font-weight: 600; color: var(--primary-deep); margin-bottom: 15px;">Principal & Academic Director</p>
+          <blockquote id="home-principal-quote" style="font-style: italic; font-family: var(--font-heading); color: var(--text-muted); font-size: 1.1rem; border-left: 3px solid var(--accent-gold); padding-left: 15px; margin-bottom: 20px;">
+            "Education is not merely the transmission of knowledge; it is the ignition of curiosity and the nurturing of character."
+          </blockquote>
+          <a href="/principal.html" class="btn btn-primary">Read Full Message →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Facilities Highlight Section -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>World-Class Campus Facilities</h2>
+        <p>State-of-the-art infrastructure designed to inspire curiosity and nurture talents.</p>
+      </div>
+
+      <div class="grid grid-3" id="home-facilities-grid">
+        <p style="grid-column: span 3; text-align: center;">Loading facilities...</p>
+      </div>
+
+      <div style="text-align: center; margin-top: 35px;">
+        <a href="/facilities.html" class="btn btn-secondary" style="border-color: var(--primary-deep); color: var(--primary-deep);">Explore All Facilities →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Events Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Upcoming Campus Events</h2>
+        <p>Join our vibrant school community in upcoming academic, cultural, and sports competitions.</p>
+      </div>
+
+      <div class="grid grid-2" id="home-events-grid">
+        <p style="grid-column: span 2; text-align: center;">Loading events...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 id="footer-school-name">St. Andrews International Academy</h3>
+          <p id="footer-description">Committed to academic excellence, holistic development, and moral stewardship.</p>
+        </div>
+
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/academics.html">Academics</a></li>
+            <li><a href="/facilities.html">Facilities</a></li>
+            <li><a href="/faculty.html">Faculty Directory</a></li>
+            <li><a href="/admissions.html">Admissions</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Student Corner</h4>
+          <ul>
+            <li><a href="/notices.html">Notice Board</a></li>
+            <li><a href="/events.html">Events Calendar</a></li>
+            <li><a href="/gallery.html">Photo Gallery</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Contact Details</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">📍 <span id="footer-address">124 Academy Boulevard, Cityville</span></p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">📞 <span id="footer-phone">+1 (555) 234-5678</span></p>
+          <p style="font-size: 0.9rem;">✉️ <span id="footer-email">info@standrewsacademy.edu</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom" id="footer-copyright">
+        &copy; 2026 St. Andrews International Academy. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/public.js"></script>
+  <script>
+    async function loadHomePageData() {
+      try {
+        const [notices, principal, facilities, events] = await Promise.all([
+          apiRequest('/public/notices'),
+          apiRequest('/public/principal'),
+          apiRequest('/public/facilities'),
+          apiRequest('/public/events')
+        ]);
+
+        // 1. Render Notices (Top 3)
+        const noticesContainer = document.getElementById('home-notices-list');
+        if (notices.data && notices.data.length > 0) {
+          noticesContainer.innerHTML = notices.data.slice(0, 3).map(n => `
+            <div class="notice-board">
+              <div>
+                <strong style="color: var(--primary-deep); font-size: 1.1rem;">${n.title}</strong>
+                <p style="margin: 4px 0 0 0; color: var(--text-muted); font-size: 0.92rem;">${n.description ? n.description.substring(0, 120) + '...' : ''}</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 15px;">
+                <span class="notice-date">Published: ${formatDate(n.publish_date)}</span>
+                ${n.attachment_url ? `<a href="${n.attachment_url}" target="_blank" class="btn btn-secondary" style="padding: 4px 12px; font-size: 0.8rem; border-color: var(--primary-deep); color: var(--primary-deep);">PDF</a>` : ''}
+              </div>
+            </div>
+          `).join('');
+        } else {
+          noticesContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">No current notices published.</p>';
+        }
+
+        // 2. Render Principal Preview
+        if (principal.data) {
+          const p = principal.data;
+          document.getElementById('home-principal-name').textContent = p.name;
+          document.getElementById('home-principal-designation').textContent = p.designation;
+          document.getElementById('home-principal-quote').textContent = `"${p.message.substring(0, 220)}..."`;
+          if (p.photo_url) document.getElementById('home-principal-photo').src = p.photo_url;
+        }
+
+        // 3. Render Facilities Grid (Top 3)
+        const facContainer = document.getElementById('home-facilities-grid');
+        if (facilities.data && facilities.data.length > 0) {
+          facContainer.innerHTML = facilities.data.slice(0, 3).map(f => `
+            <div class="card">
+              <img src="${f.image_url || 'https://via.placeholder.com/400x250?text=Facility'}" class="card-img" alt="${f.name}">
+              <div class="card-body">
+                <h3>${f.name}</h3>
+                <p style="color: var(--text-muted); font-size: 0.92rem;">${f.description ? f.description.substring(0, 110) + '...' : ''}</p>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          facContainer.innerHTML = '<p style="grid-column: span 3; text-align: center;">Facilities list coming soon.</p>';
+        }
+
+        // 4. Render Events (Top 2)
+        const eventsContainer = document.getElementById('home-events-grid');
+        if (events.data && events.data.length > 0) {
+          eventsContainer.innerHTML = events.data.slice(0, 2).map(e => `
+            <div class="card" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+              <img src="${e.image_url || 'https://via.placeholder.com/300x200?text=Event'}" style="width: 40%; object-fit: cover; min-height: 180px;" alt="${e.name}">
+              <div class="card-body" style="width: 60%;">
+                <div class="card-meta">📅 ${formatDate(e.event_date)} ${e.event_time ? '| 🕒 ' + e.event_time : ''}</div>
+                <h3>${e.name}</h3>
+                <p style="font-size: 0.88rem; color: var(--text-muted);">${e.description ? e.description.substring(0, 90) + '...' : ''}</p>
+                <p style="font-size: 0.85rem; font-weight: 600; color: var(--primary-deep); margin: 0;">📍 ${e.location || 'Campus'}</p>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          eventsContainer.innerHTML = '<p style="grid-column: span 2; text-align: center;">No upcoming events scheduled.</p>';
+        }
+
+      } catch (err) {
+        console.error('Error loading home page content:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadHomePageData);
+  </script>
+</body>
+</html>

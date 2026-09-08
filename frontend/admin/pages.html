@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pages Content Management - Admin CMS</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-header">
+      <h2>School CMS</h2>
+      <span>ADMIN</span>
+    </div>
+    <nav class="admin-nav">
+      <ul>
+        <li><a href="/admin/index.html">📊 Dashboard</a></li>
+        <li><a href="/admin/settings.html">⚙️ School Settings</a></li>
+        <li><a href="/admin/pages.html" class="active">📄 Pages Content</a></li>
+        <li><a href="/admin/notices.html">📢 Notices</a></li>
+        <li><a href="/admin/events.html">📅 Events</a></li>
+        <li><a href="/admin/faculty.html">👨‍🏫 Faculty</a></li>
+        <li><a href="/admin/facilities.html">🏛️ Facilities</a></li>
+        <li><a href="/admin/gallery.html">🖼️ Gallery</a></li>
+        <li><a href="/admin/enquiries.html">📬 Enquiries Inbox</a></li>
+      </ul>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <button class="btn-logout" onclick="handleLogout()">Logout</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <h1>Static Pages & Profile Content</h1>
+      <div class="admin-user-info">
+        <a href="/index.html" target="_blank" style="font-size: 0.85rem; color: var(--accent-terracotta);">🌐 View Live Site</a>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div id="pages-alert-container"></div>
+
+      <!-- Principal's Message Section -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Principal's Message & Profile</h3>
+        </div>
+        <form id="principal-form">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label for="principal_name">Principal Full Name</label>
+              <input type="text" id="principal_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="principal_designation">Designation</label>
+              <input type="text" id="principal_designation" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="principal_photo_file">Principal Photograph</label>
+            <input type="file" id="principal_photo_file" class="form-control" accept="image/*">
+            <input type="hidden" id="principal_photo_url">
+            <img id="principal-photo-preview" class="upload-preview" alt="Principal Preview">
+          </div>
+
+          <div class="form-group">
+            <label for="principal_message">Principal's Address / Message</label>
+            <textarea id="principal_message" class="form-control" style="min-height: 140px;" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save Principal Profile</button>
+        </form>
+      </div>
+
+      <!-- About School Sections -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>About School (History, Vision, Mission, Values)</h3>
+        </div>
+        <form id="about-form">
+          <div class="form-group">
+            <label for="about_history">School History & Heritage</label>
+            <textarea id="about_history" class="form-control" style="min-height: 100px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="about_vision">Vision Statement</label>
+            <textarea id="about_vision" class="form-control" style="min-height: 80px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="about_mission">Mission Statement</label>
+            <textarea id="about_mission" class="form-control" style="min-height: 80px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="about_values">Core Values</label>
+            <textarea id="about_values" class="form-control" style="min-height: 80px;"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save About Content</button>
+        </form>
+      </div>
+
+      <!-- Academics Information -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Academics & Methodology</h3>
+        </div>
+        <form id="academics-form">
+          <div class="form-group">
+            <label for="academic_curriculum">Curriculum Framework</label>
+            <textarea id="academic_curriculum" class="form-control" style="min-height: 90px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="academic_methodology">Teaching Methodology</label>
+            <textarea id="academic_methodology" class="form-control" style="min-height: 90px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="academic_info">General Academic Information & Performance</label>
+            <textarea id="academic_info" class="form-control" style="min-height: 90px;"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save Academic Content</button>
+        </form>
+      </div>
+
+      <!-- Admissions Information -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Admissions Information & Prospectus</h3>
+        </div>
+        <form id="admissions-form">
+          <div class="form-group">
+            <label for="admission_info">Admissions Overview & Openings</label>
+            <textarea id="admission_info" class="form-control" style="min-height: 80px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="admission_eligibility">Eligibility Criteria</label>
+            <textarea id="admission_eligibility" class="form-control" style="min-height: 80px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="admission_procedure">Application Procedure</label>
+            <textarea id="admission_procedure" class="form-control" style="min-height: 100px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="admission_documents">Required Documents</label>
+            <textarea id="admission_documents" class="form-control" style="min-height: 80px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="admission_dates">Important Dates Schedule</label>
+            <textarea id="admission_dates" class="form-control" style="min-height: 80px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="prospectus_file">Downloadable Prospectus PDF</label>
+            <input type="file" id="prospectus_file" class="form-control" accept="application/pdf">
+            <input type="hidden" id="prospectus_url">
+            <p id="prospectus-current-link" style="font-size: 0.85rem; margin-top: 5px; color: var(--text-muted);"></p>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save Admissions Info</button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    async function loadPagesData() {
+      try {
+        const [principal, about, academics, admissions] = await Promise.all([
+          apiRequest('/public/principal'),
+          apiRequest('/public/about'),
+          apiRequest('/public/academics'),
+          apiRequest('/public/admissions')
+        ]);
+
+        if (principal.data) {
+          const p = principal.data;
+          document.getElementById('principal_name').value = p.name || '';
+          document.getElementById('principal_designation').value = p.designation || '';
+          document.getElementById('principal_message').value = p.message || '';
+          document.getElementById('principal_photo_url').value = p.photo_url || '';
+          if (p.photo_url) {
+            const img = document.getElementById('principal-photo-preview');
+            img.src = p.photo_url;
+            img.style.display = 'block';
+          }
+        }
+
+        if (about.data) {
+          const a = about.data;
+          if (a.history) document.getElementById('about_history').value = a.history.content || '';
+          if (a.vision) document.getElementById('about_vision').value = a.vision.content || '';
+          if (a.mission) document.getElementById('about_mission').value = a.mission.content || '';
+          if (a.values) document.getElementById('about_values').value = a.values.content || '';
+        }
+
+        if (academics.data) {
+          const ac = academics.data;
+          document.getElementById('academic_curriculum').value = ac.curriculum || '';
+          document.getElementById('academic_methodology').value = ac.methodology || '';
+          document.getElementById('academic_info').value = ac.academic_info || '';
+        }
+
+        if (admissions.data) {
+          const ad = admissions.data;
+          document.getElementById('admission_info').value = ad.info || '';
+          document.getElementById('admission_eligibility').value = ad.eligibility || '';
+          document.getElementById('admission_procedure').value = ad.procedure_info || '';
+          document.getElementById('admission_documents').value = ad.required_documents || '';
+          document.getElementById('admission_dates').value = ad.important_dates || '';
+          document.getElementById('prospectus_url').value = ad.prospectus_url || '';
+          if (ad.prospectus_url) {
+            document.getElementById('prospectus-current-link').innerHTML = `Current Prospectus: <a href="${ad.prospectus_url}" target="_blank">View PDF</a>`;
+          }
+        }
+      } catch (err) {
+        showAlert('pages-alert-container', 'Failed to load page contents.');
+      }
+    }
+
+    // Principal Form Submit
+    document.getElementById('principal-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        let photo_url = document.getElementById('principal_photo_url').value;
+        const uploaded = await uploadFileHelper('principal_photo_file');
+        if (uploaded) photo_url = uploaded;
+
+        await apiRequest('/admin/principal', 'PUT', {
+          name: document.getElementById('principal_name').value,
+          designation: document.getElementById('principal_designation').value,
+          photo_url: photo_url,
+          message: document.getElementById('principal_message').value
+        });
+        showAlert('pages-alert-container', "Principal's message saved successfully!", 'success');
+      } catch (err) { showAlert('pages-alert-container', err.message); }
+    });
+
+    // About Form Submit
+    document.getElementById('about-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await Promise.all([
+          apiRequest('/admin/about', 'PUT', { section_key: 'history', title: 'Our History', content: document.getElementById('about_history').value }),
+          apiRequest('/admin/about', 'PUT', { section_key: 'vision', title: 'Vision Statement', content: document.getElementById('about_vision').value }),
+          apiRequest('/admin/about', 'PUT', { section_key: 'mission', title: 'Mission Statement', content: document.getElementById('about_mission').value }),
+          apiRequest('/admin/about', 'PUT', { section_key: 'values', title: 'Core Values', content: document.getElementById('about_values').value })
+        ]);
+        showAlert('pages-alert-container', 'About section saved successfully!', 'success');
+      } catch (err) { showAlert('pages-alert-container', err.message); }
+    });
+
+    // Academics Form Submit
+    document.getElementById('academics-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await apiRequest('/admin/academics', 'PUT', {
+          curriculum: document.getElementById('academic_curriculum').value,
+          methodology: document.getElementById('academic_methodology').value,
+          academic_info: document.getElementById('academic_info').value
+        });
+        showAlert('pages-alert-container', 'Academic info saved successfully!', 'success');
+      } catch (err) { showAlert('pages-alert-container', err.message); }
+    });
+
+    // Admissions Form Submit
+    document.getElementById('admissions-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        let prospectus_url = document.getElementById('prospectus_url').value;
+        const uploaded = await uploadFileHelper('prospectus_file');
+        if (uploaded) prospectus_url = uploaded;
+
+        await apiRequest('/admin/admissions', 'PUT', {
+          info: document.getElementById('admission_info').value,
+          eligibility: document.getElementById('admission_eligibility').value,
+          procedure_info: document.getElementById('admission_procedure').value,
+          required_documents: document.getElementById('admission_documents').value,
+          important_dates: document.getElementById('admission_dates').value,
+          prospectus_url: prospectus_url
+        });
+        showAlert('pages-alert-container', 'Admissions info saved successfully!', 'success');
+        loadPagesData();
+      } catch (err) { showAlert('pages-alert-container', err.message); }
+    });
+
+    document.addEventListener('DOMContentLoaded', loadPagesData);
+  </script>
+</body>
+</html>

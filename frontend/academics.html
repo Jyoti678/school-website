@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academics - St. Andrews International Academy</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-contact">
+        <span id="top-bar-phone">📞 +1 (555) 234-5678</span>
+        <span id="top-bar-email">✉️ info@standrewsacademy.edu</span>
+        <span id="top-bar-timings" style="margin-left: 10px; color: var(--accent-gold);">🕒 Mon-Fri: 8:00 AM - 3:30 PM</span>
+      </div>
+      <div class="top-bar-social">
+        <a href="/admin/login.html" class="btn-admin-login">🔐 Admin CMS Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-logo-group">
+        <img id="brand-logo-img" src="/public/logo.png" alt="School Crest">
+        <div class="brand-text">
+          <h1 id="brand-school-name">St. Andrews International Academy</h1>
+          <p id="brand-tagline">Nurturing Minds, Shaping Futures</p>
+        </div>
+      </div>
+
+      <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="main-nav" id="main-nav-container">
+        <ul class="nav-list">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/principal.html">Principal's Message</a></li>
+          <li><a href="/academics.html" class="active">Academics</a></li>
+          <li><a href="/facilities.html">Facilities</a></li>
+          <li><a href="/faculty.html">Faculty</a></li>
+          <li><a href="/notices.html">Notices</a></li>
+          <li><a href="/events.html">Events</a></li>
+          <li><a href="/gallery.html">Gallery</a></li>
+          <li><a href="/admissions.html">Admissions</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section class="section" style="background: var(--bg-dark); color: white; padding: 40px 0;">
+    <div class="container" style="text-align: center;">
+      <h1 style="color: white;">Academic Programs</h1>
+      <p style="color: var(--bg-subtle);">Rigorous curriculum, innovative methodology, and student achievement.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section">
+    <div class="container" style="max-width: 950px;">
+      <div id="academics-container">
+        <p style="text-align: center;">Loading academic information...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 id="footer-school-name">St. Andrews International Academy</h3>
+          <p id="footer-description">Committed to academic excellence, holistic development, and moral stewardship.</p>
+        </div>
+
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/academics.html">Academics</a></li>
+            <li><a href="/facilities.html">Facilities</a></li>
+            <li><a href="/faculty.html">Faculty Directory</a></li>
+            <li><a href="/admissions.html">Admissions</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Student Corner</h4>
+          <ul>
+            <li><a href="/notices.html">Notice Board</a></li>
+            <li><a href="/events.html">Events Calendar</a></li>
+            <li><a href="/gallery.html">Photo Gallery</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Contact Details</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">📍 <span id="footer-address">124 Academy Boulevard, Cityville</span></p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">📞 <span id="footer-phone">+1 (555) 234-5678</span></p>
+          <p style="font-size: 0.9rem;">✉️ <span id="footer-email">info@standrewsacademy.edu</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom" id="footer-copyright">
+        &copy; 2026 St. Andrews International Academy. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/public.js"></script>
+  <script>
+    async function loadAcademicsPage() {
+      try {
+        const res = await apiRequest('/public/academics');
+        if (res.data) {
+          const ac = res.data;
+          document.getElementById('academics-container').innerHTML = `
+            <div class="card card-body" style="margin-bottom: 25px; border-left: 4px solid var(--primary-deep);">
+              <h2 style="color: var(--primary-deep); font-size: 1.6rem; margin-bottom: 12px;">📚 Curriculum Framework</h2>
+              <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-main);">${ac.curriculum || 'Curriculum info managed via Admin CMS.'}</p>
+            </div>
+
+            <div class="card card-body" style="margin-bottom: 25px; border-left: 4px solid var(--accent-gold);">
+              <h2 style="color: var(--primary-deep); font-size: 1.6rem; margin-bottom: 12px;">💡 Teaching Methodology</h2>
+              <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-main);">${ac.methodology || 'Methodology info managed via Admin CMS.'}</p>
+            </div>
+
+            <div class="card card-body" style="border-left: 4px solid var(--accent-terracotta);">
+              <h2 style="color: var(--primary-deep); font-size: 1.6rem; margin-bottom: 12px;">🏆 Academic Information & Performance</h2>
+              <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-main);">${ac.academic_info || 'Performance details managed via Admin CMS.'}</p>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.error('Failed to load academics page:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAcademicsPage);
+  </script>
+</body>
+</html>

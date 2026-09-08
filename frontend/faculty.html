@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Directory - St. Andrews International Academy</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-contact">
+        <span id="top-bar-phone">📞 +1 (555) 234-5678</span>
+        <span id="top-bar-email">✉️ info@standrewsacademy.edu</span>
+        <span id="top-bar-timings" style="margin-left: 10px; color: var(--accent-gold);">🕒 Mon-Fri: 8:00 AM - 3:30 PM</span>
+      </div>
+      <div class="top-bar-social">
+        <a href="/admin/login.html" class="btn-admin-login">🔐 Admin CMS Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-logo-group">
+        <img id="brand-logo-img" src="/public/logo.png" alt="School Crest">
+        <div class="brand-text">
+          <h1 id="brand-school-name">St. Andrews International Academy</h1>
+          <p id="brand-tagline">Nurturing Minds, Shaping Futures</p>
+        </div>
+      </div>
+
+      <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="main-nav" id="main-nav-container">
+        <ul class="nav-list">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/principal.html">Principal's Message</a></li>
+          <li><a href="/academics.html">Academics</a></li>
+          <li><a href="/facilities.html">Facilities</a></li>
+          <li><a href="/faculty.html" class="active">Faculty</a></li>
+          <li><a href="/notices.html">Notices</a></li>
+          <li><a href="/events.html">Events</a></li>
+          <li><a href="/gallery.html">Gallery</a></li>
+          <li><a href="/admissions.html">Admissions</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section class="section" style="background: var(--bg-dark); color: white; padding: 40px 0;">
+    <div class="container" style="text-align: center;">
+      <h1 style="color: white;">Faculty & Educators Directory</h1>
+      <p style="color: var(--bg-subtle);">Meet our distinguished educators, department heads, and academic mentors.</p>
+    </div>
+  </section>
+
+  <!-- Faculty Grid -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-3" id="faculty-page-grid">
+        <p style="grid-column: span 3; text-align: center;">Loading faculty directory...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 id="footer-school-name">St. Andrews International Academy</h3>
+          <p id="footer-description">Committed to academic excellence, holistic development, and moral stewardship.</p>
+        </div>
+
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/academics.html">Academics</a></li>
+            <li><a href="/facilities.html">Facilities</a></li>
+            <li><a href="/faculty.html">Faculty Directory</a></li>
+            <li><a href="/admissions.html">Admissions</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Student Corner</h4>
+          <ul>
+            <li><a href="/notices.html">Notice Board</a></li>
+            <li><a href="/events.html">Events Calendar</a></li>
+            <li><a href="/gallery.html">Photo Gallery</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Contact Details</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">📍 <span id="footer-address">124 Academy Boulevard, Cityville</span></p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">📞 <span id="footer-phone">+1 (555) 234-5678</span></p>
+          <p style="font-size: 0.9rem;">✉️ <span id="footer-email">info@standrewsacademy.edu</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom" id="footer-copyright">
+        &copy; 2026 St. Andrews International Academy. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/public.js"></script>
+  <script>
+    async function loadFacultyPage() {
+      try {
+        const res = await apiRequest('/public/faculty');
+        const grid = document.getElementById('faculty-page-grid');
+        if (res.data && res.data.length > 0) {
+          grid.innerHTML = res.data.map(f => `
+            <div class="card" style="text-align: center; padding: 25px 20px;">
+              <img src="${f.photo_url || 'https://via.placeholder.com/200x200?text=Faculty'}" style="width: 130px; height: 130px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px auto; border: 3px solid var(--accent-gold);" alt="${f.name}">
+              <h3 style="color: var(--primary-deep); margin-bottom: 4px;">${f.name}</h3>
+              <p style="color: var(--accent-terracotta); font-weight: 600; font-size: 0.92rem; margin-bottom: 4px;">${f.designation}</p>
+              <span class="badge" style="background: var(--bg-subtle); color: var(--primary-deep); margin-bottom: 12px;">${f.department}</span>
+              <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;">${f.biography || ''}</p>
+            </div>
+          `).join('');
+        } else {
+          grid.innerHTML = '<p style="grid-column: span 3; text-align: center;">No faculty members listed.</p>';
+        }
+      } catch (err) {
+        console.error('Failed to load faculty directory:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadFacultyPage);
+  </script>
+</body>
+</html>

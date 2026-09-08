@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - St. Andrews International Academy</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-contact">
+        <span id="top-bar-phone">📞 +1 (555) 234-5678</span>
+        <span id="top-bar-email">✉️ info@standrewsacademy.edu</span>
+        <span id="top-bar-timings" style="margin-left: 10px; color: var(--accent-gold);">🕒 Mon-Fri: 8:00 AM - 3:30 PM</span>
+      </div>
+      <div class="top-bar-social">
+        <a href="/admin/login.html" class="btn-admin-login">🔐 Admin CMS Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-logo-group">
+        <img id="brand-logo-img" src="/public/logo.png" alt="School Crest">
+        <div class="brand-text">
+          <h1 id="brand-school-name">St. Andrews International Academy</h1>
+          <p id="brand-tagline">Nurturing Minds, Shaping Futures</p>
+        </div>
+      </div>
+
+      <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="main-nav" id="main-nav-container">
+        <ul class="nav-list">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/about.html" class="active">About</a></li>
+          <li><a href="/principal.html">Principal's Message</a></li>
+          <li><a href="/academics.html">Academics</a></li>
+          <li><a href="/facilities.html">Facilities</a></li>
+          <li><a href="/faculty.html">Faculty</a></li>
+          <li><a href="/notices.html">Notices</a></li>
+          <li><a href="/events.html">Events</a></li>
+          <li><a href="/gallery.html">Gallery</a></li>
+          <li><a href="/admissions.html">Admissions</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section class="section" style="background: var(--bg-dark); color: white; padding: 40px 0;">
+    <div class="container" style="text-align: center;">
+      <h1 style="color: white;">About Our Academy</h1>
+      <p style="color: var(--bg-subtle);">Discover our rich heritage, foundational vision, mission, and core values.</p>
+    </div>
+  </section>
+
+  <!-- About Content Sections -->
+  <section class="section">
+    <div class="container">
+      <div id="about-content-wrapper">
+        <p style="text-align: center;">Loading school background...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 id="footer-school-name">St. Andrews International Academy</h3>
+          <p id="footer-description">Committed to academic excellence, holistic development, and moral stewardship.</p>
+        </div>
+
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/academics.html">Academics</a></li>
+            <li><a href="/facilities.html">Facilities</a></li>
+            <li><a href="/faculty.html">Faculty Directory</a></li>
+            <li><a href="/admissions.html">Admissions</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Student Corner</h4>
+          <ul>
+            <li><a href="/notices.html">Notice Board</a></li>
+            <li><a href="/events.html">Events Calendar</a></li>
+            <li><a href="/gallery.html">Photo Gallery</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Contact Details</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">📍 <span id="footer-address">124 Academy Boulevard, Cityville</span></p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">📞 <span id="footer-phone">+1 (555) 234-5678</span></p>
+          <p style="font-size: 0.9rem;">✉️ <span id="footer-email">info@standrewsacademy.edu</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom" id="footer-copyright">
+        &copy; 2026 St. Andrews International Academy. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/public.js"></script>
+  <script>
+    async function loadAboutPage() {
+      try {
+        const res = await apiRequest('/public/about');
+        const wrapper = document.getElementById('about-content-wrapper');
+        if (res.data) {
+          const a = res.data;
+          wrapper.innerHTML = `
+            <div style="max-width: 900px; margin: 0 auto;">
+              <div class="admin-card" style="margin-bottom: 30px;">
+                <h2 style="color: var(--primary-deep); font-size: 1.8rem; margin-bottom: 15px;">📜 ${a.history ? a.history.title : 'Our History'}</h2>
+                <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-main);">${a.history ? a.history.content : 'History details managed via Admin CMS.'}</p>
+              </div>
+
+              <div class="grid grid-2" style="margin-bottom: 30px;">
+                <div class="card card-body" style="border-top: 4px solid var(--accent-gold);">
+                  <h3 style="color: var(--primary-deep);">👁️ ${a.vision ? a.vision.title : 'Vision Statement'}</h3>
+                  <p style="color: var(--text-muted); font-size: 0.98rem;">${a.vision ? a.vision.content : ''}</p>
+                </div>
+
+                <div class="card card-body" style="border-top: 4px solid var(--accent-terracotta);">
+                  <h3 style="color: var(--primary-deep);">🎯 ${a.mission ? a.mission.title : 'Mission Statement'}</h3>
+                  <p style="color: var(--text-muted); font-size: 0.98rem;">${a.mission ? a.mission.content : ''}</p>
+                </div>
+              </div>
+
+              <div class="admin-card">
+                <h2 style="color: var(--primary-deep); font-size: 1.6rem; margin-bottom: 15px;">💎 ${a.values ? a.values.title : 'Core Values'}</h2>
+                <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-main);">${a.values ? a.values.content : ''}</p>
+              </div>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.error('Failed to load about page data:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAboutPage);
+  </script>
+</body>
+</html>

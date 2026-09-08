@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admissions - St. Andrews International Academy</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-contact">
+        <span id="top-bar-phone">📞 +1 (555) 234-5678</span>
+        <span id="top-bar-email">✉️ info@standrewsacademy.edu</span>
+        <span id="top-bar-timings" style="margin-left: 10px; color: var(--accent-gold);">🕒 Mon-Fri: 8:00 AM - 3:30 PM</span>
+      </div>
+      <div class="top-bar-social">
+        <a href="/admin/login.html" class="btn-admin-login">🔐 Admin CMS Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-logo-group">
+        <img id="brand-logo-img" src="/public/logo.png" alt="School Crest">
+        <div class="brand-text">
+          <h1 id="brand-school-name">St. Andrews International Academy</h1>
+          <p id="brand-tagline">Nurturing Minds, Shaping Futures</p>
+        </div>
+      </div>
+
+      <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">☰</button>
+
+      <nav class="main-nav" id="main-nav-container">
+        <ul class="nav-list">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/principal.html">Principal's Message</a></li>
+          <li><a href="/academics.html">Academics</a></li>
+          <li><a href="/facilities.html">Facilities</a></li>
+          <li><a href="/faculty.html">Faculty</a></li>
+          <li><a href="/notices.html">Notices</a></li>
+          <li><a href="/events.html">Events</a></li>
+          <li><a href="/gallery.html">Gallery</a></li>
+          <li><a href="/admissions.html" class="active">Admissions</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section class="section" style="background: var(--bg-dark); color: white; padding: 40px 0;">
+    <div class="container" style="text-align: center;">
+      <h1 style="color: white;">Admissions 2026-2027</h1>
+      <p style="color: var(--bg-subtle);">Join our vibrant academic community. Learn about eligibility, procedure, and apply online.</p>
+    </div>
+  </section>
+
+  <!-- Admissions Information & Form -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-2" style="align-items: start;">
+        
+        <!-- Left: Admission Details -->
+        <div>
+          <div class="card card-body" style="margin-bottom: 20px;">
+            <h2 style="color: var(--primary-deep); font-size: 1.5rem; margin-bottom: 10px;">📋 Admission Procedure & Eligibility</h2>
+            <div id="admission-info-block">
+              <p>Loading admission procedure details...</p>
+            </div>
+          </div>
+
+          <div class="card card-body" style="margin-bottom: 20px; border-left: 4px solid var(--accent-terracotta);">
+            <h3 style="color: var(--primary-deep); margin-bottom: 10px;">📄 Required Documents</h3>
+            <div id="admission-documents-block" style="white-space: pre-line;">
+              Loading documents list...
+            </div>
+          </div>
+
+          <div class="card card-body" style="border-left: 4px solid var(--accent-gold);">
+            <h3 style="color: var(--primary-deep); margin-bottom: 10px;">📅 Important Admission Schedule</h3>
+            <div id="admission-dates-block" style="white-space: pre-line;">
+              Loading schedule...
+            </div>
+            <div id="prospectus-download-wrapper" style="margin-top: 15px;"></div>
+          </div>
+        </div>
+
+        <!-- Right: Admission Enquiry Form -->
+        <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+          <h2 style="color: var(--primary-deep); font-size: 1.6rem; margin-bottom: 8px;">Apply / Submit Admission Enquiry</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">Fill out this quick form and our admissions office will reach out with the application pack.</p>
+
+          <div id="admission-form-alert"></div>
+
+          <form id="admission-enquiry-form">
+            <div class="form-group">
+              <label for="parent_student_name">Parent / Student Full Name *</label>
+              <input type="text" id="parent_student_name" class="form-control" required placeholder="e.g. John & Sarah Miller">
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Contact Phone Number *</label>
+              <input type="tel" id="phone" class="form-control" required placeholder="+1 (555) 000-0000">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" class="form-control" placeholder="parent@example.com">
+            </div>
+
+            <div class="form-group">
+              <label for="class_interested">Grade / Class Interested In *</label>
+              <select id="class_interested" class="form-control" required>
+                <option value="">Select Grade</option>
+                <option value="Kindergarten / Nursery">Kindergarten / Nursery</option>
+                <option value="Grade 1 - Grade 5 (Primary)">Grade 1 - Grade 5 (Primary)</option>
+                <option value="Grade 6 - Grade 8 (Middle)">Grade 6 - Grade 8 (Middle)</option>
+                <option value="Grade 9 - Grade 10 (Secondary)">Grade 9 - Grade 10 (Secondary)</option>
+                <option value="Grade 11 - Grade 12 (Senior Secondary)">Grade 11 - Grade 12 (Senior Secondary)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Additional Message / Questions</label>
+              <textarea id="message" class="form-control" style="min-height: 90px;" placeholder="Mention previous school or specific queries..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Admission Enquiry</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 id="footer-school-name">St. Andrews International Academy</h3>
+          <p id="footer-description">Committed to academic excellence, holistic development, and moral stewardship.</p>
+        </div>
+
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/academics.html">Academics</a></li>
+            <li><a href="/facilities.html">Facilities</a></li>
+            <li><a href="/faculty.html">Faculty Directory</a></li>
+            <li><a href="/admissions.html">Admissions</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Student Corner</h4>
+          <ul>
+            <li><a href="/notices.html">Notice Board</a></li>
+            <li><a href="/events.html">Events Calendar</a></li>
+            <li><a href="/gallery.html">Photo Gallery</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Contact Details</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">📍 <span id="footer-address">124 Academy Boulevard, Cityville</span></p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">📞 <span id="footer-phone">+1 (555) 234-5678</span></p>
+          <p style="font-size: 0.9rem;">✉️ <span id="footer-email">info@standrewsacademy.edu</span></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom" id="footer-copyright">
+        &copy; 2026 St. Andrews International Academy. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/public.js"></script>
+  <script>
+    async function loadAdmissionsPage() {
+      try {
+        const res = await apiRequest('/public/admissions');
+        if (res.data) {
+          const ad = res.data;
+          document.getElementById('admission-info-block').innerHTML = `
+            <p><strong>Overview:</strong> ${ad.info || ''}</p>
+            <p style="margin-top: 10px;"><strong>Eligibility:</strong> ${ad.eligibility || ''}</p>
+            <div style="margin-top: 10px; white-space: pre-line;"><strong>Procedure:</strong>\n${ad.procedure_info || ''}</div>
+          `;
+          document.getElementById('admission-documents-block').textContent = ad.required_documents || 'Standard verification documents required.';
+          document.getElementById('admission-dates-block').textContent = ad.important_dates || 'Schedules updated annually.';
+
+          if (ad.prospectus_url) {
+            document.getElementById('prospectus-download-wrapper').innerHTML = `
+              <a href="${ad.prospectus_url}" target="_blank" class="btn btn-terracotta" style="font-size: 0.9rem;">📥 Download Official School Prospectus (PDF)</a>
+            `;
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load admissions info:', err);
+      }
+    }
+
+    document.getElementById('admission-enquiry-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlert('admission-form-alert');
+
+      try {
+        const payload = {
+          parent_student_name: document.getElementById('parent_student_name').value,
+          phone: document.getElementById('phone').value,
+          email: document.getElementById('email').value,
+          class_interested: document.getElementById('class_interested').value,
+          message: document.getElementById('message').value
+        };
+
+        const res = await apiRequest('/public/admission-enquiry', 'POST', payload);
+        if (res.success) {
+          showAlert('admission-form-alert', res.message, 'success');
+          document.getElementById('admission-enquiry-form').reset();
+        }
+      } catch (err) {
+        showAlert('admission-form-alert', err.message || 'Failed to submit enquiry.');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', loadAdmissionsPage);
+  </script>
+</body>
+</html>

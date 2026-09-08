@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - School Admin CMS</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body style="background: var(--bg-dark); display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+
+  <div class="login-container">
+    <div class="login-header">
+      <h2>School Admin CMS</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Sign in with your administrative credentials</p>
+    </div>
+
+    <div id="login-alert-container"></div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" class="form-control" placeholder="e.g. admin" required autocomplete="username">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Sign In to CMS</button>
+    </form>
+    
+    <div style="margin-top: 20px; text-align: center;">
+      <a href="/index.html" style="font-size: 0.85rem; color: var(--text-muted);">← Return to Public Website</a>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlert('login-alert-container');
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await apiRequest('/admin/auth/login', 'POST', { username, password });
+        if (res.success) {
+          window.location.href = '/admin/index.html';
+        }
+      } catch (err) {
+        showAlert('login-alert-container', err.message || 'Login failed. Please check credentials.');
+      }
+    });
+  </script>
+</body>
+</html>

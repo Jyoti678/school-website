@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enquiries Inbox - Admin CMS</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-header">
+      <h2>School CMS</h2>
+      <span>ADMIN</span>
+    </div>
+    <nav class="admin-nav">
+      <ul>
+        <li><a href="/admin/index.html">📊 Dashboard</a></li>
+        <li><a href="/admin/settings.html">⚙️ School Settings</a></li>
+        <li><a href="/admin/pages.html">📄 Pages Content</a></li>
+        <li><a href="/admin/notices.html">📢 Notices</a></li>
+        <li><a href="/admin/events.html">📅 Events</a></li>
+        <li><a href="/admin/faculty.html">👨‍🏫 Faculty</a></li>
+        <li><a href="/admin/facilities.html">🏛️ Facilities</a></li>
+        <li><a href="/admin/gallery.html">🖼️ Gallery</a></li>
+        <li><a href="/admin/enquiries.html" class="active">📬 Enquiries Inbox</a></li>
+      </ul>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <button class="btn-logout" onclick="handleLogout()">Logout</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <h1>Public Enquiries & Applications Inbox</h1>
+    </header>
+
+    <div class="admin-content">
+      <div id="enquiries-alert-container"></div>
+
+      <!-- Tab Switcher -->
+      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <button id="tab-contact-btn" class="btn btn-primary" onclick="switchTab('contact')">💬 General Contact Messages</button>
+        <button id="tab-admission-btn" class="btn btn-secondary" style="background: var(--primary-deep); color: white;" onclick="switchTab('admission')">🎓 Admission Applications</button>
+      </div>
+
+      <!-- Contact Enquiries Table -->
+      <div id="contact-tab-content" class="admin-card">
+        <div class="admin-card-header">
+          <h3>General Contact Enquiries</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Phone / Email</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="contact-table-body">
+              <tr><td colspan="6">Loading contact enquiries...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Admission Enquiries Table -->
+      <div id="admission-tab-content" class="admin-card" style="display: none;">
+        <div class="admin-card-header">
+          <h3>Admission Applications & Enquiries</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Parent/Student Name</th>
+                <th>Grade Interested</th>
+                <th>Phone / Email</th>
+                <th>Notes / Message</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admission-table-body">
+              <tr><td colspan="7">Loading admission enquiries...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    let contactData = [];
+    let admissionData = [];
+    let currentTab = 'contact';
+
+    function switchTab(tab) {
+      currentTab = tab;
+      if (tab === 'contact') {
+        document.getElementById('contact-tab-content').style.display = 'block';
+        document.getElementById('admission-tab-content').style.display = 'none';
+        document.getElementById('tab-contact-btn').className = 'btn btn-primary';
+        document.getElementById('tab-admission-btn').className = 'btn btn-secondary';
+      } else {
+        document.getElementById('contact-tab-content').style.display = 'none';
+        document.getElementById('admission-tab-content').style.display = 'block';
+        document.getElementById('tab-contact-btn').className = 'btn btn-secondary';
+        document.getElementById('tab-admission-btn').className = 'btn btn-primary';
+      }
+    }
+
+    async function loadEnquiries() {
+      try {
+        const [contactRes, admissionRes] = await Promise.all([
+          apiRequest('/admin/enquiries/contact'),
+          apiRequest('/admin/enquiries/admission')
+        ]);
+        contactData = contactRes.data || [];
+        admissionData = admissionRes.data || [];
+        renderTables();
+      } catch (err) {
+        showAlert('enquiries-alert-container', 'Failed to load enquiries inbox.');
+      }
+    }
+
+    function renderTables() {
+      // Render Contact Table
+      const cBody = document.getElementById('contact-table-body');
+      if (contactData.length === 0) {
+        cBody.innerHTML = '<tr><td colspan="6">No contact messages received yet.</td></tr>';
+      } else {
+        cBody.innerHTML = contactData.map(item => `
+          <tr style="${item.status === 'unread' ? 'font-weight: 600;' : ''}">
+            <td>${formatDate(item.created_at)}</td>
+            <td>${item.name}</td>
+            <td>📞 ${item.phone}<br>✉️ ${item.email || 'N/A'}</td>
+            <td>${item.message}</td>
+            <td><span class="badge ${item.status === 'unread' ? 'badge-unread' : 'badge-read'}">${item.status}</span></td>
+            <td>
+              <button class="btn-action btn-toggle" onclick="toggleContactStatus(${item.id}, '${item.status === 'unread' ? 'read' : 'unread'}')">${item.status === 'unread' ? 'Mark Read' : 'Mark Unread'}</button>
+              <button class="btn-action btn-delete" onclick="deleteContact(${item.id})">Delete</button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Render Admission Table
+      const aBody = document.getElementById('admission-table-body');
+      if (admissionData.length === 0) {
+        aBody.innerHTML = '<tr><td colspan="7">No admission applications received yet.</td></tr>';
+      } else {
+        aBody.innerHTML = admissionData.map(item => `
+          <tr style="${item.status === 'unread' ? 'font-weight: 600;' : ''}">
+            <td>${formatDate(item.created_at)}</td>
+            <td>${item.parent_student_name}</td>
+            <td><span class="badge" style="background: var(--bg-subtle); color: var(--primary-deep);">${item.class_interested}</span></td>
+            <td>📞 ${item.phone}<br>✉️ ${item.email || 'N/A'}</td>
+            <td>${item.message || 'N/A'}</td>
+            <td><span class="badge ${item.status === 'unread' ? 'badge-unread' : 'badge-read'}">${item.status}</span></td>
+            <td>
+              <button class="btn-action btn-toggle" onclick="toggleAdmissionStatus(${item.id}, '${item.status === 'unread' ? 'read' : 'unread'}')">${item.status === 'unread' ? 'Mark Read' : 'Mark Unread'}</button>
+              <button class="btn-action btn-delete" onclick="deleteAdmission(${item.id})">Delete</button>
+            </td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    async function toggleContactStatus(id, newStatus) {
+      try {
+        await apiRequest(`/admin/enquiries/contact/${id}`, 'PUT', { status: newStatus });
+        loadEnquiries();
+      } catch (err) { alert(err.message); }
+    }
+
+    async function deleteContact(id) {
+      if (!confirm('Delete this message?')) return;
+      try {
+        await apiRequest(`/admin/enquiries/contact/${id}`, 'DELETE');
+        loadEnquiries();
+      } catch (err) { alert(err.message); }
+    }
+
+    async function toggleAdmissionStatus(id, newStatus) {
+      try {
+        await apiRequest(`/admin/enquiries/admission/${id}`, 'PUT', { status: newStatus });
+        loadEnquiries();
+      } catch (err) { alert(err.message); }
+    }
+
+    async function deleteAdmission(id) {
+      if (!confirm('Delete this application record?')) return;
+      try {
+        await apiRequest(`/admin/enquiries/admission/${id}`, 'DELETE');
+        loadEnquiries();
+      } catch (err) { alert(err.message); }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadEnquiries);
+  </script>
+</body>
+</html>

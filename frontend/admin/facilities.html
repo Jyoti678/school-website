@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facilities Management - Admin CMS</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-header">
+      <h2>School CMS</h2>
+      <span>ADMIN</span>
+    </div>
+    <nav class="admin-nav">
+      <ul>
+        <li><a href="/admin/index.html">📊 Dashboard</a></li>
+        <li><a href="/admin/settings.html">⚙️ School Settings</a></li>
+        <li><a href="/admin/pages.html">📄 Pages Content</a></li>
+        <li><a href="/admin/notices.html">📢 Notices</a></li>
+        <li><a href="/admin/events.html">📅 Events</a></li>
+        <li><a href="/admin/faculty.html">👨‍🏫 Faculty</a></li>
+        <li><a href="/admin/facilities.html" class="active">🏛️ Facilities</a></li>
+        <li><a href="/admin/gallery.html">🖼️ Gallery</a></li>
+        <li><a href="/admin/enquiries.html">📬 Enquiries Inbox</a></li>
+      </ul>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <button class="btn-logout" onclick="handleLogout()">Logout</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <h1>School Facilities & Infrastructure</h1>
+      <button class="btn btn-primary" onclick="openFacilityModal()">+ Add Facility</button>
+    </header>
+
+    <div class="admin-content">
+      <div id="facilities-alert-container"></div>
+
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Campus Facilities</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Facility Name</th>
+                <th>Description</th>
+                <th>Order</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="facilities-table-body">
+              <tr><td colspan="6">Loading facilities...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal for Create / Edit Facility -->
+  <div class="modal-overlay" id="facility-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="facility-modal-title">Add Facility</h3>
+        <button class="modal-close" onclick="closeModal('facility-modal')">&times;</button>
+      </div>
+
+      <form id="facility-form">
+        <input type="hidden" id="facility_id">
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label for="facility_name">Facility Name</label>
+            <input type="text" id="facility_name" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="facility_display_order">Display Order</label>
+            <input type="number" id="facility_display_order" class="form-control" value="0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="facility_description">Description</label>
+          <textarea id="facility_description" class="form-control" style="min-height: 90px;"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="facility_image_file">Facility Image</label>
+          <input type="file" id="facility_image_file" class="form-control" accept="image/*">
+          <input type="hidden" id="facility_image_url">
+          <img id="facility-image-preview" class="upload-preview" alt="Facility Preview">
+        </div>
+
+        <div class="form-group">
+          <label for="facility_is_active">Visibility</label>
+          <select id="facility_is_active" class="form-control">
+            <option value="1">Active (Visible)</option>
+            <option value="0">Hidden / Inactive</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Save Facility</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    let facilitiesData = [];
+
+    async function loadFacilities() {
+      try {
+        const res = await apiRequest('/admin/facilities');
+        facilitiesData = res.data || [];
+        renderFacilitiesTable();
+      } catch (err) {
+        showAlert('facilities-alert-container', 'Failed to load facilities list.');
+      }
+    }
+
+    function renderFacilitiesTable() {
+      const tbody = document.getElementById('facilities-table-body');
+      if (facilitiesData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6">No facilities found. Click "+ Add Facility" to add one.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = facilitiesData.map(item => `
+        <tr>
+          <td><img src="${item.image_url || '/public/placeholder_facility.jpg'}" class="table-thumbnail" alt="Image"></td>
+          <td><strong>${item.name}</strong></td>
+          <td>${item.description ? item.description.substring(0, 70) + '...' : 'N/A'}</td>
+          <td>${item.display_order}</td>
+          <td><span class="badge ${item.is_active ? 'badge-active' : 'badge-inactive'}">${item.is_active ? 'Active' : 'Hidden'}</span></td>
+          <td>
+            <button class="btn-action btn-edit" onclick="editFacility(${item.id})">Edit</button>
+            <button class="btn-action btn-delete" onclick="deleteFacility(${item.id})">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openFacilityModal(facility = null) {
+      document.getElementById('facility-form').reset();
+      document.getElementById('facility_id').value = '';
+      document.getElementById('facility_image_url').value = '';
+      document.getElementById('facility-image-preview').style.display = 'none';
+
+      if (facility) {
+        document.getElementById('facility-modal-title').textContent = 'Edit Facility';
+        document.getElementById('facility_id').value = facility.id;
+        document.getElementById('facility_name').value = facility.name;
+        document.getElementById('facility_description').value = facility.description || '';
+        document.getElementById('facility_display_order').value = facility.display_order || 0;
+        document.getElementById('facility_is_active').value = facility.is_active ? 1 : 0;
+        document.getElementById('facility_image_url').value = facility.image_url || '';
+        if (facility.image_url) {
+          const img = document.getElementById('facility-image-preview');
+          img.src = facility.image_url;
+          img.style.display = 'block';
+        }
+      } else {
+        document.getElementById('facility-modal-title').textContent = 'Add Facility';
+      }
+
+      openModal('facility-modal');
+    }
+
+    function editFacility(id) {
+      const item = facilitiesData.find(f => f.id === id);
+      if (item) openFacilityModal(item);
+    }
+
+    async function deleteFacility(id) {
+      if (!confirm('Are you sure you want to delete this facility?')) return;
+      try {
+        await apiRequest(`/admin/facilities/${id}`, 'DELETE');
+        showAlert('facilities-alert-container', 'Facility deleted successfully.', 'success');
+        loadFacilities();
+      } catch (err) {
+        showAlert('facilities-alert-container', err.message || 'Failed to delete facility.');
+      }
+    }
+
+    document.getElementById('facility-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('facility_id').value;
+
+      try {
+        let image_url = document.getElementById('facility_image_url').value;
+        const uploaded = await uploadFileHelper('facility_image_file');
+        if (uploaded) image_url = uploaded;
+
+        const payload = {
+          name: document.getElementById('facility_name').value,
+          description: document.getElementById('facility_description').value,
+          display_order: parseInt(document.getElementById('facility_display_order').value, 10) || 0,
+          image_url: image_url,
+          is_active: parseInt(document.getElementById('facility_is_active').value, 10)
+        };
+
+        if (id) {
+          await apiRequest(`/admin/facilities/${id}`, 'PUT', payload);
+        } else {
+          await apiRequest('/admin/facilities', 'POST', payload);
+        }
+
+        closeModal('facility-modal');
+        showAlert('facilities-alert-container', `Facility ${id ? 'updated' : 'added'} successfully!`, 'success');
+        loadFacilities();
+      } catch (err) {
+        alert(err.message || 'Error saving facility.');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', loadFacilities);
+  </script>
+</body>
+</html>
