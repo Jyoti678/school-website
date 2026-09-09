@@ -1,8 +1,8 @@
 -- School Website + Admin CMS Database Schema
 -- Database: school_cms
 
-CREATE DATABASE IF NOT EXISTS school_cms DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE school_cms;
+CREATE DATABASE IF NOT EXISTS defaultdb DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE defaultdb;
 
 -- 1. Admins Table
 CREATE TABLE IF NOT EXISTS admins (
