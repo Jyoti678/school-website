@@ -19,18 +19,21 @@ async function login(req, res, next) {
       return res.status(401).json({ success: false, message: 'Invalid username or password.' });
     }
 
-    // Set session
-    req.session.admin = {
-      id: admin.id,
-      username: admin.username,
-      name: admin.name,
-      email: admin.email
-    };
+    req.session.regenerate(err => {
+      if (err) return next(err);
 
-    return res.json({
-      success: true,
-      message: 'Login successful.',
-      admin: req.session.admin
+      req.session.admin = {
+        id: admin.id,
+        username: admin.username,
+        name: admin.name,
+        email: admin.email
+      };
+
+      return res.json({
+        success: true,
+        message: 'Login successful.',
+        admin: req.session.admin
+      });
     });
   } catch (err) {
     next(err);
@@ -43,7 +46,7 @@ async function logout(req, res, next) {
       if (err) {
         return res.status(500).json({ success: false, message: 'Could not log out.' });
       }
-      res.clearCookie('connect.sid');
+      res.clearCookie('school_cms_sid');
       return res.json({ success: true, message: 'Logout successful.' });
     });
   } catch (err) {
