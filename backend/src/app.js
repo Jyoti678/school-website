@@ -10,6 +10,11 @@ const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
+// Trust Render's HTTPS reverse proxy
+if (env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 // Security Headers (Configure content security policy to allow embeds/images)
 app.use(helmet({
   contentSecurityPolicy: false,
