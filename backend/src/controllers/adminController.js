@@ -25,7 +25,13 @@ async function uploadFile(req, res, next) {
 // School Settings
 async function updateSettings(req, res, next) {
   try {
+    const current = await settingsModel.getSettings();
     const updated = await settingsModel.updateSettings(req.body);
+    if (current && current.hero_image_url
+      && Object.prototype.hasOwnProperty.call(req.body, 'hero_image_url')
+      && current.hero_image_url !== req.body.hero_image_url) {
+      await storageProvider.deleteFile(current.hero_image_url);
+    }
     res.json({ success: true, message: 'School settings updated successfully.', data: updated });
   } catch (err) { next(err); }
 }

@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS school_settings (
     id INT PRIMARY KEY DEFAULT 1,
     school_name VARCHAR(150) NOT NULL,
     logo_url VARCHAR(255),
+    hero_image_url VARCHAR(255),
     tagline VARCHAR(255),
     description TEXT,
     address TEXT,
@@ -164,11 +165,12 @@ CREATE TABLE IF NOT EXISTS admission_enquiries (
 );
 
 -- Seed Initial Data
-INSERT INTO school_settings (id, school_name, logo_url, tagline, description, address, phone, email, timings, map_iframe_url, facebook_url, twitter_url, instagram_url, youtube_url)
+INSERT INTO school_settings (id, school_name, logo_url, hero_image_url, tagline, description, address, phone, email, timings, map_iframe_url, facebook_url, twitter_url, instagram_url, youtube_url)
 VALUES (
     1,
     'St. Andrews International Academy',
     '/uploads/logo.png',
+    NULL,
     'Nurturing Minds, Shaping Futures',
     'Founded in 1995, St. Andrews International Academy is committed to academic excellence, holistic character development, and equipping students with lifelong skills for global citizenship.',
     '124 Academy Boulevard, Education District, Cityville 400012',

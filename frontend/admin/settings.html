@@ -15,15 +15,15 @@
     </div>
     <nav class="admin-nav">
       <ul>
-        <li><a href="/admin/index.html">📊 Dashboard</a></li>
-        <li><a href="/admin/settings.html" class="active">⚙️ School Settings</a></li>
-        <li><a href="/admin/pages.html">📄 Pages Content</a></li>
-        <li><a href="/admin/notices.html">📢 Notices</a></li>
-        <li><a href="/admin/events.html">📅 Events</a></li>
-        <li><a href="/admin/faculty.html">👨‍🏫 Faculty</a></li>
-        <li><a href="/admin/facilities.html">🏛️ Facilities</a></li>
-        <li><a href="/admin/gallery.html">🖼️ Gallery</a></li>
-        <li><a href="/admin/enquiries.html">📬 Enquiries Inbox</a></li>
+        <li><a href="/admin/index.html"><span class="nav-marker" aria-hidden="true"></span>Dashboard</a></li>
+        <li><a href="/admin/settings.html" class="active"><span class="nav-marker" aria-hidden="true"></span>School Settings</a></li>
+        <li><a href="/admin/pages.html"><span class="nav-marker" aria-hidden="true"></span>Pages Content</a></li>
+        <li><a href="/admin/notices.html"><span class="nav-marker" aria-hidden="true"></span>Notices</a></li>
+        <li><a href="/admin/events.html"><span class="nav-marker" aria-hidden="true"></span>Events</a></li>
+        <li><a href="/admin/faculty.html"><span class="nav-marker" aria-hidden="true"></span>Faculty</a></li>
+        <li><a href="/admin/facilities.html"><span class="nav-marker" aria-hidden="true"></span>Facilities</a></li>
+        <li><a href="/admin/gallery.html"><span class="nav-marker" aria-hidden="true"></span>Gallery</a></li>
+        <li><a href="/admin/enquiries.html"><span class="nav-marker" aria-hidden="true"></span>Enquiries Inbox</a></li>
       </ul>
     </nav>
     <div class="admin-sidebar-footer">
@@ -44,7 +44,10 @@
 
       <div class="admin-card">
         <div class="admin-card-header">
-          <h3>Edit General School Information</h3>
+          <div>
+            <h3>School Branding</h3>
+            <p class="admin-card-description">Manage the identity and main photograph shown across the public website.</p>
+          </div>
         </div>
 
         <form id="settings-form">
@@ -63,6 +66,18 @@
             <input type="file" id="logo_file" class="form-control" accept="image/*">
             <input type="hidden" id="logo_url">
             <img id="logo-preview" class="upload-preview" alt="Logo Preview">
+          </div>
+
+          <div class="form-group hero-image-field">
+            <label for="hero_image_file">School Photograph</label>
+            <p class="field-help">Recommended: a landscape school or campus photograph in JPG, PNG, or WebP format.</p>
+            <input type="file" id="hero_image_file" class="form-control" accept="image/jpeg,image/png,image/webp">
+            <input type="hidden" id="hero_image_url">
+            <div class="hero-upload-preview" id="hero-upload-preview">
+              <img id="hero-image-preview" class="upload-preview" alt="School Photograph Preview">
+              <span id="hero-image-empty">No school photograph selected.</span>
+            </div>
+            <button type="button" id="remove-hero-image" class="btn btn-secondary hero-remove-button">Remove Photograph</button>
           </div>
 
           <div class="form-group">
@@ -150,11 +165,24 @@
           document.getElementById('instagram_url').value = s.instagram_url || '';
           document.getElementById('youtube_url').value = s.youtube_url || '';
           document.getElementById('logo_url').value = s.logo_url || '';
+          document.getElementById('hero_image_url').value = s.hero_image_url || '';
 
           if (s.logo_url) {
             const img = document.getElementById('logo-preview');
             img.src = s.logo_url;
             img.style.display = 'block';
+          }
+
+          const heroPreview = document.getElementById('hero-image-preview');
+          const heroEmpty = document.getElementById('hero-image-empty');
+          if (s.hero_image_url) {
+            heroPreview.src = s.hero_image_url;
+            heroPreview.style.display = 'block';
+            heroEmpty.style.display = 'none';
+          } else {
+            heroPreview.removeAttribute('src');
+            heroPreview.style.display = 'none';
+            heroEmpty.style.display = 'inline';
           }
         }
       } catch (err) {
@@ -170,11 +198,15 @@
         let logo_url = document.getElementById('logo_url').value;
         const uploadedLogo = await uploadFileHelper('logo_file');
         if (uploadedLogo) logo_url = uploadedLogo;
+        let hero_image_url = document.getElementById('hero_image_url').value;
+        const uploadedHeroImage = await uploadFileHelper('hero_image_file');
+        if (uploadedHeroImage) hero_image_url = uploadedHeroImage;
 
         const payload = {
           school_name: document.getElementById('school_name').value,
           tagline: document.getElementById('tagline').value,
           logo_url: logo_url,
+          hero_image_url: hero_image_url,
           description: document.getElementById('description').value,
           phone: document.getElementById('phone').value,
           email: document.getElementById('email').value,
@@ -195,6 +227,24 @@
       } catch (err) {
         showAlert('settings-alert-container', err.message || 'Failed to update settings.');
       }
+    });
+
+    document.getElementById('hero_image_file').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const preview = document.getElementById('hero-image-preview');
+      const empty = document.getElementById('hero-image-empty');
+      preview.src = URL.createObjectURL(file);
+      preview.style.display = 'block';
+      empty.style.display = 'none';
+    });
+
+    document.getElementById('remove-hero-image').addEventListener('click', () => {
+      document.getElementById('hero_image_file').value = '';
+      document.getElementById('hero_image_url').value = '';
+      document.getElementById('hero-image-preview').removeAttribute('src');
+      document.getElementById('hero-image-preview').style.display = 'none';
+      document.getElementById('hero-image-empty').style.display = 'inline';
     });
 
     document.addEventListener('DOMContentLoaded', loadSettings);

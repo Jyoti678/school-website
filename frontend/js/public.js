@@ -39,6 +39,20 @@ function renderHeaderFooter(s) {
   const brandLogo = document.getElementById('brand-logo-img');
   if (brandLogo && s.logo_url) brandLogo.src = s.logo_url;
 
+  const heroImage = document.getElementById('hero-image');
+  const heroPlaceholder = document.getElementById('hero-media-placeholder');
+  if (heroImage && heroPlaceholder) {
+    if (s.hero_image_url) {
+      heroImage.src = s.hero_image_url;
+      heroImage.style.display = 'block';
+      heroPlaceholder.style.display = 'none';
+    } else {
+      heroImage.removeAttribute('src');
+      heroImage.style.display = 'none';
+      heroPlaceholder.style.display = 'flex';
+    }
+  }
+
   // Footer info
   const footerTitle = document.getElementById('footer-school-name');
   if (footerTitle && s.school_name) footerTitle.textContent = s.school_name;

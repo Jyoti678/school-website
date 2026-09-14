@@ -8,17 +8,6 @@
 </head>
 <body>
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div class="container">
-      <div class="top-bar-contact">
-        <span id="top-bar-phone">📞 +1 (555) 234-5678</span>
-        <span id="top-bar-email">✉️ info@standrewsacademy.edu</span>
-        <span id="top-bar-timings" style="margin-left: 10px; color: var(--accent-gold);">🕒 Mon-Fri: 8:00 AM - 3:30 PM</span>
-      </div>
-    </div>
-  </div>
-
   <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
@@ -45,7 +34,6 @@
           <li><a href="/gallery.html">Gallery</a></li>
           <li><a href="/admissions.html">Admissions</a></li>
           <li><a href="/contact.html">Contact</a></li>
-          <li><a href="/admin/login.html">Admin Panel</a></li>
         </ul>
       </nav>
     </div>
@@ -53,12 +41,25 @@
 
   <!-- Hero Banner -->
   <section class="hero-section">
-    <div class="container">
-      <h1 id="hero-title">Excellence in Education & Character</h1>
-      <p id="hero-description">A world-class learning environment fostering academic achievement, personal integrity, and global leadership for students from Kindergarten to Grade 12.</p>
-      <div class="hero-actions">
-        <a href="/admissions.html" class="btn btn-primary">Admissions 2026-27</a>
-        <a href="/about.html" class="btn btn-secondary">Explore Our Campus</a>
+    <div class="container hero-layout">
+      <div class="hero-copy">
+        <p class="hero-kicker">ST. ANDREWS INTERNATIONAL ACADEMY</p>
+        <h1 id="hero-title">Excellence in Education & Character</h1>
+        <p id="hero-description">A world-class learning environment fostering academic achievement, personal integrity, and global leadership for students from Kindergarten to Grade 12.</p>
+        <div class="hero-actions">
+          <a href="/admissions.html" class="btn btn-primary">Explore Admissions</a>
+          <a href="/about.html" class="btn btn-secondary">Learn About Us</a>
+        </div>
+      </div>
+      <div class="hero-media" role="img" aria-label="School campus photograph placeholder">
+        <div class="hero-media-frame" id="hero-media-frame">
+          <img id="hero-image" class="hero-image" alt="School campus photograph">
+          <div id="hero-media-placeholder" class="hero-media-placeholder">
+          <span class="hero-media-label">Campus photograph</span>
+          <strong>A place to learn, belong, and grow.</strong>
+          <span class="hero-media-note">Your school image can be placed here.</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -168,6 +169,7 @@
           <p style="font-size: 0.9rem; margin-bottom: 8px;">📍 <span id="footer-address">124 Academy Boulevard, Cityville</span></p>
           <p style="font-size: 0.9rem; margin-bottom: 8px;">📞 <span id="footer-phone">+1 (555) 234-5678</span></p>
           <p style="font-size: 0.9rem;">✉️ <span id="footer-email">info@standrewsacademy.edu</span></p>
+          <a class="footer-staff-link" href="/admin/login.html">Staff Login</a>
         </div>
       </div>
 
