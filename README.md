@@ -1,62 +1,168 @@
-# School Website + Admin CMS (MVP)
+# School Website & Admin CMS
 
-A production-ready **School Website and School Admin CMS** built with Vanilla HTML5/CSS3/JavaScript, Node.js, Express.js, and MySQL.
+A full-stack school website and content management system built with HTML, CSS, JavaScript, Node.js, Express.js, and MySQL.
+
+The platform combines a responsive public-facing website with a protected admin CMS for managing school content, notices, events, faculty, gallery items, admissions, and enquiries.
+
+**Live Demo:** https://school-cms-backend-1ql5.onrender.com/
 
 ---
 
 ## Technical Stack
 
-- **Frontend**: HTML5, CSS3 (Custom Design Tokens), Vanilla JavaScript (No React/Vue/Angular).
-- **Backend**: Node.js, Express.js (REST API).
-- **Database**: MySQL using `mysql2/promise` connection pool.
-- **Authentication**: HTTP-only session cookies with `express-session` & `bcryptjs` password hashing.
-- **File Storage**: Abstracted Storage Driver (Default `LocalStorageProvider` uploading to `/backend/uploads/`; swappable to S3/Cloud storage for production).
-- **Security**: Rate limiting, Helmet security headers, input sanitization, file type & size validation (max 5MB).
+* **Frontend:** HTML5, CSS3, Vanilla JavaScript
+* **Backend:** Node.js, Express.js
+* **Database:** MySQL with `mysql2/promise` connection pooling
+* **Authentication:** HTTP-only session cookies with `express-session` and `bcryptjs`
+* **API:** RESTful API architecture
+* **File Storage:** Replaceable storage abstraction with local storage for development
+* **Security:** Rate limiting, Helmet security headers, input sanitization, and file type/size validation
+* **Deployment:** Render
+* **Development:** Git, npm, Docker
 
 ---
 
-## Directory Structure
+## Architecture
 
+```text
+                    ┌─────────────────────┐
+                    │      Browser        │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ HTML / CSS / JS     │
+                    │ Public + Admin UI   │
+                    └──────────┬──────────┘
+                               │
+                         REST API Requests
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │    Express.js      │
+                    │    REST API        │
+                    └──────────┬──────────┘
+                               │
+                ┌──────────────┼──────────────┐
+                ▼              ▼              ▼
+          Controllers     Middleware       Routes
+                │
+                ▼
+             Models
+                │
+                ▼
+          MySQL Database
+
+         File Uploads
+              │
+              ▼
+       Storage Abstraction
+              │
+              ▼
+        Local Storage*
 ```
-demo/
+
+`*` The current implementation uses local storage for development. The storage layer is designed to be replaceable with cloud/object storage.
+
+---
+
+## Key Engineering Work
+
+* Designed a structured Express.js backend using routes, controllers, middleware, and database models.
+* Built REST APIs for public content and protected administrative operations.
+* Implemented session-based authentication with HTTP-only cookies and bcrypt password hashing.
+* Added MySQL connection pooling and prepared database queries.
+* Implemented validation for user input and uploaded files.
+* Added security middleware including Helmet and rate limiting.
+* Built a replaceable storage abstraction to allow future cloud-storage integration.
+* Developed separate public and administrative interfaces for content management.
+
+---
+
+## Features
+
+### Public Website
+
+* Responsive school website with multiple content sections.
+* Dynamic school information retrieved from MySQL.
+* Principal's message and faculty information.
+* Academics and facilities sections.
+* Notice board and events.
+* Photo gallery.
+* Admission enquiry form.
+* Contact enquiry form.
+* Prospectus and notice attachment downloads.
+
+### Admin CMS
+
+Protected administrative interface for managing:
+
+* **School Settings:** Name, logo, address, phone, email, timings, map embed, and social links.
+* **Page Content:** About section, Principal's Message, academics, and admission information.
+* **Facilities:** Create, edit, delete, reorder, and control visibility.
+* **Faculty:** Create, edit, delete, assign departments, and reorder.
+* **Notices:** Create announcements, set publish/expiry dates, attach files, and control publishing status.
+* **Events:** Schedule events, upload posters, and manage locations and times.
+* **Gallery:** Upload photos, assign categories, and reorder items.
+* **Enquiries:** View, filter, mark as read/unread, and delete admission and contact enquiries.
+
+---
+
+## Project Structure
+
+```text
+school-website/
 ├── backend/
 │   ├── src/
-│   │   ├── config/             # DB connection pool (db.js) & Env validation (env.js)
-│   │   ├── controllers/        # Request controllers (auth, public, admin)
-│   │   ├── middleware/         # Auth session check, error handler, Multer upload
-│   │   ├── models/             # MySQL query models (prepared statements)
-│   │   ├── routes/             # Public (/api/public/*) & Admin (/api/admin/*) REST routes
-│   │   └── storage/            # Replaceable storage abstraction (localStorage.js)
-│   ├── uploads/                # Local dev media storage directory
-│   ├── schema.sql              # MySQL schema & initial seed data
-│   ├── seedAdmin.js            # Admin user creation & db seed script
-│   ├── server.js               # Express HTTP server entry point
+│   │   ├── config/
+│   │   │   ├── db.js
+│   │   │   └── env.js
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   └── storage/
+│   ├── uploads/
+│   ├── schema.sql
+│   ├── seedAdmin.js
+│   ├── server.js
 │   └── .env.example
+│
 ├── frontend/
-│   ├── css/                    # Custom CSS variables, public styling & admin dashboard layout
-│   ├── js/                     # API fetch client wrapper, public binding, and admin CMS controller
-│   ├── admin/                  # Multi-page Admin CMS HTML interface (login, dashboard, content editors)
-│   └── *.html                  # 11 Public Web pages (Home, About, Principal, Academics, etc.)
+│   ├── css/
+│   ├── js/
+│   ├── admin/
+│   └── *.html
+│
 └── README.md
 ```
 
 ---
 
-## Setup & Running Locally
+## Running Locally
 
-### 1. Prerequisites
-- Node.js (v18+)
-- MySQL Server (or MySQL Workbench) running locally
+### Prerequisites
 
-### 2. Environment Configuration
-Copy `.env.example` to `.env` inside the `backend` directory and adjust MySQL credentials if needed:
+* Node.js 18+
+* MySQL Server
+* npm
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Jyoti678/school-website.git
+cd school-website
+```
+
+### 2. Configure the backend
 
 ```bash
 cd backend
-cp .env.example .env
+npm install
 ```
 
-Default `.env` configuration:
+Create a `.env` file based on `.env.example`:
+
 ```env
 PORT=5000
 NODE_ENV=development
@@ -65,69 +171,121 @@ DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=your_mysql_password
 DB_NAME=school_cms
-SESSION_SECRET=school_admin_secret_key_2026
+SESSION_SECRET=replace_with_a_secure_random_value
 STORAGE_DRIVER=local
 ```
 
-### 3. Install Dependencies & Seed Database
+**Never commit your `.env` file or real credentials to GitHub.**
+
+### 3. Initialize the database
+
 ```bash
-cd backend
-npm install
 npm run seed
 ```
 
-Running `npm run seed`:
-- Creates the `school_cms` database and tables.
-- Inserts initial demo school settings, notices, facilities, faculty, events, and gallery items.
-- Creates the default admin account:
-  - **Username**: `admin`
-  - **Password**: `admin123`
+The seed process creates the required database tables and development data.
 
-### 4. Start Server
+### 4. Start the application
+
 ```bash
 npm start
 ```
-Or for development watching:
+
+For development with automatic restart:
+
 ```bash
 npm run dev
 ```
 
----
+The application runs locally at:
 
-## Accessing the Website & Admin Panel
-
-- **Public Website**: [http://localhost:5000/index.html](http://localhost:5000/index.html)
-- **Admin CMS Login**: [http://localhost:5000/admin/login.html](http://localhost:5000/admin/login.html)
-  - **Username**: `admin`
-  - **Password**: `admin123`
+```text
+http://localhost:5000
+```
 
 ---
 
-## Features
+## Authentication
 
-### Public Website
-- Dynamic data binding for all 11 core sections:
-  - **Home**, **About School**, **Principal's Message**, **Academics**, **Facilities**, **Faculty Directory**, **Notice Board**, **Events**, **Photo Gallery**, **Admissions**, **Contact Us**.
-- Interactive **Admission Enquiry** and **Contact Enquiry** submission forms stored directly in MySQL.
-- Downloadable Prospectus & Notice attachments (PDF/Doc).
+The admin area is protected using session-based authentication.
 
-### Admin CMS (`/admin/`)
-- Multi-page secure administrative portal:
-  - **School Settings**: Update name, logo, address, phone, email, timings, map embed, social links.
-  - **Pages Content**: Update About sections, Principal's Message & photo, Academic info, and Admissions schedule.
-  - **Facilities Management**: Create, edit, delete, reorder, and toggle visibility.
-  - **Faculty Management**: Create, edit, delete, assign departments, and reorder.
-  - **Notices Management**: Post announcements, set publish/expiry dates, attach files, toggle publish status.
-  - **Events Management**: Schedule events, upload posters, set locations & times.
-  - **Gallery Management**: Upload photos, assign categories, reorder.
-  - **Enquiries Inbox**: Read, mark read/unread, filter, and delete Contact & Admission applications.
+For local development, create an administrator through the project's seed/configuration workflow.
+
+**Do not use default or shared credentials in production.**
+
+Production secrets such as database passwords and session secrets should be provided through environment variables.
 
 ---
 
-## Replacing File Storage for Production
+## Storage Architecture
 
-To replace the local development file storage with cloud storage (e.g. AWS S3 or Cloudinary):
-1. Implement a new class inheriting from `BaseStorageProvider` in `backend/src/storage/`.
-2. Implement `uploadFile(file)` and `deleteFile(fileUrl)`.
-3. Export the new driver based on `process.env.STORAGE_DRIVER`.
-No database schema or controller changes are required.
+The application uses a storage abstraction so that the underlying file-storage implementation can be changed without rewriting the controllers or database layer.
+
+Current implementation:
+
+```text
+Upload
+   ↓
+Storage Interface
+   ↓
+Local Storage Provider
+   ↓
+backend/uploads/
+```
+
+The abstraction can later be extended to providers such as object/cloud storage.
+
+To add another provider:
+
+1. Implement the storage interface in `backend/src/storage/`.
+2. Implement file upload and deletion operations.
+3. Register the provider through the storage configuration.
+4. Select the provider through the environment configuration.
+
+---
+
+## Security Considerations
+
+The application includes several security-focused measures:
+
+* HTTP-only session cookies
+* Password hashing with bcrypt
+* Prepared database queries
+* Helmet security headers
+* Rate limiting
+* Input sanitization
+* File type validation
+* File size limits
+* Environment-based configuration for secrets
+* Protected administrative routes
+
+This is a personal/educational project and should undergo additional security review, monitoring, deployment hardening, and testing before being used for sensitive production workloads.
+
+---
+
+## Known Limitations
+
+* Current file storage uses local/server storage rather than persistent cloud object storage.
+* The authentication workflow is currently designed around the project's administrative use case.
+* Automated test coverage can be expanded.
+* Production deployment would benefit from additional monitoring, logging, backup, and security hardening.
+
+---
+
+## Future Improvements
+
+* Cloud object storage integration.
+* Automated test coverage for API and authentication flows.
+* Improved admin dashboard UX.
+* Role-based access control for multiple administrators.
+* Database migration tooling.
+* Automated CI/CD checks.
+* Centralized logging and monitoring.
+
+---
+
+## Project Links
+
+**Repository:** https://github.com/Jyoti678/school-website
+
+**Live Demo:** https://school-cms-backend-1ql5.onrender.com/
