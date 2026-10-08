@@ -18,7 +18,7 @@ The platform combines a responsive public-facing website with a protected admin 
 * **File Storage:** Replaceable storage abstraction with local storage for development
 * **Security:** Rate limiting, Helmet security headers, input sanitization, and file type/size validation
 * **Deployment:** Render
-* **Development:** Git, npm, Docker
+* **Development:** Git, npm
 
 ---
 
